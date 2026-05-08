@@ -31,7 +31,7 @@ uv sync --extra vision --extra dev
 - 配置项：`CAMERA_PARAMS_PATH`、`ARUCO_VIDEO_PATH`、`ARUCO_DICTIONARY`、`MARKER_LENGTH_METERS`、`MODEL_PATH`。
 - 函数：`load_obj(...)`、`estimate_marker_pose(...)`、`render_virtual_object(...)`。
 
-提示：`res/models/` 是提供的模型资源，不要改动。
+提示：`res/models/` 是提供的模型资源，可以直接使用。
 
 ## 3. 运行与测试
 
