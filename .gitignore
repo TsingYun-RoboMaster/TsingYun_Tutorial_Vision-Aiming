@@ -1,0 +1,47 @@
+# Metadata files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+
+# Generated/working docs
+docs/simulator_codebase_overview.md
+docs/tasks.md
+
+# Python caches
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Build outputs
+bin/
+build/
+install/
+log/
+*.o
+*.so
+*.a
+
+# Local environments
+.venv/
+
+# Generated artifacts
+*.log
+*.tmp
+*.pth
+*.npz
+*.onnx
+tasks/task2-detector/data/MNIST/
+tasks/task2-detector/models/*
+!tasks/task2-detector/models/.gitkeep
+tasks/task2-detector/test-results/
+
+# Simulator local junk
+missing-dataset/
+
+# Local planning notes
+scheme.md
+.vscode/

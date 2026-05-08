@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install Python dependencies
+        run: uv sync --extra vision --extra dev
+
+      - name: Run Python tests
+        run: uv run pytest
+
+      - name: Configure CMake
+        run: cmake -S . -B build/hw -DHW_BUILD_TESTS=ON
+
+      - name: Build C++ tests
+        run: cmake --build build/hw
+
+      - name: Run C++ tests
+        run: ctest --test-dir build/hw --output-on-failure
+
+      - name: Reject unfinished TODO stubs
+        run: uv run python tools/check_no_notimplemented.py
