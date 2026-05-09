@@ -68,7 +68,7 @@ cmake --version
 ctest --version
 ```
 
-#### Ubuntu
+#### Linux
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh

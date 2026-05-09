@@ -88,6 +88,9 @@ class FallbackPipeline:
                 )
 
             cur_x, cur_y, cur_z = positions[best_idx]
+
+            # TODO: optionally enable a hard reset here when `class_id` changes
+
             self.tracker.update(cur_x, cur_y, cur_z, dt)
             pred_x, pred_y, pred_z = self.tracker.predict(self.latency * self.latency_multiplier)
 
