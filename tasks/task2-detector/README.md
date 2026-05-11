@@ -19,6 +19,36 @@ uv run python tasks/task2-detector/src/train.py --download-mnist
 uv run python tasks/task2-detector/src/train.py
 ```
 
+在开始编码之前，请按以下步骤操作：
+
+启动对应平台的预编译 Unity 仿真器：
+
+- Windows: `simulator/Windows/AutoAim.exe`
+- Linux: `simulator/Linux/AutoAim.x86_64`
+- macOS: `simulator/MacOS.app`
+
+启动方式：
+
+- Windows：双击 `AutoAim.exe`
+- macOS：
+  ```bash
+  chmod +x simulator/MacOS.app/Contents/MacOS/AutoAim
+  open simulator/MacOS.app
+  ```
+- Linux：
+  ```bash
+  chmod +x simulator/Linux/AutoAim.x86_64
+  ./simulator/Linux/AutoAim.x86_64
+  ```
+
+运行启动脚本。
+
+```bash
+uv run python simulator/runner.py
+```
+
+尽管无法正确瞄准，您可以看到这个任务需要识别的目标的大致形态特征，便于了解代码各部分的作用。
+
 ## 2. 需要完成
 
 代码位置：

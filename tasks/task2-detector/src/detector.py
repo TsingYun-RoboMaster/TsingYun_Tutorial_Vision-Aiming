@@ -20,7 +20,7 @@ CornerSet = tuple[Point2D, Point2D, Point2D, Point2D]
 RgbPixel = tuple[int, int, int]
 ImageLike = np.ndarray
 WARP_OUTPUT_SIZE = 128
-MNIST_INNER_RATIO = 0.70
+MNIST_INNER_RATIO = 0.69
 
 
 @dataclass(frozen=True)
@@ -108,24 +108,16 @@ def crop_bbox(image: np.ndarray, corner_candidates: Sequence[Sequence[Point2D]])
 
 def order_corners(corners: Sequence[Point2D]) -> CornerSet:
     # TODO(student): Sort the four target corners into a stable order.
-    # points = Convert input corners to float pairs
-    # if number of points is not 4:
-    #     raise an error
-    # sort points by y first, then x
-    # top = first two sorted points
-    # bottom = last two sorted points
-    # top_left, top_right = sort top by x
-    # bottom_left, bottom_right = sort bottom by x
-    # return top_left, top_right, bottom_right, bottom_left
+    # Input: four 2D corners in arbitrary order.
+    # Output: corners ordered as top-left, top-right, bottom-right, bottom-left.
+    # Compute a stable ordering rule that works for the target board geometry.
     raise NotImplementedError("order_corners is not implemented")
 
 
 def detect_bbox(image: ImageLike, threshold: int = 200) -> list[CornerSet]:
     # TODO(student): Detect board candidates.
     # image_array = convert image to an OpenCV-compatible uint8 array
-    # red_mask = threshold reddish pixels into a binary image:
-    #     either use RGB/BGR channel rules, or convert to HSV and use cv2.inRange
-    #     use threshold to control how strict the red/bright mask is
+    # red_mask = threshold reddish pixels into a binary image
     # optionally clean red_mask with morphology so small noisy blobs disappear
     # contours = cv2.findContours(red_mask)
     # corner_candidates = []
@@ -138,29 +130,19 @@ def detect_bbox(image: ImageLike, threshold: int = 200) -> list[CornerSet]:
     #     if polygon is not convex or has unreasonable aspect ratio:
     #         continue
     #     corners = order_corners(the four polygon vertices)
-    #     inner_corners = adjust corners inward if the red border is thicker than desired
-    #     append inner_corners to corner_candidates
+    #     append corners to corner_candidates
     # return corner_candidates
     raise NotImplementedError("detect_bbox is not implemented")
 
 
 def detect_mnist_board(image: ImageLike, threshold: int = 200) -> list[Detection]:
     # TODO(student): Classify detected MNIST-board candidates and filter them.
-    # confidence_threshold = choose a minimum model confidence inside this function
-    # corner_candidates = detect_bbox(image, threshold)
-    # crops = crop_bbox(image, corner_candidates)
-    # detections = []
-    # for each corners, crop in zip(corner_candidates, crops):
-    #     digit, digit_confidence = classify_mnist_digit(crop)
-    #     if digit is not in [0, 9]:
-    #         raise a clear error
-    #     if digit_confidence is outside [0, 1]:
-    #         raise a clear error
-    #     if digit_confidence is below confidence_threshold:
-    #         continue
-    #     bbox = axis-aligned rectangle covering corners
-    #     append Detection with digit, digit_confidence, bbox, corners, and empty rvec/tvec
-    # return detections
+    # Input: one RGB image and a threshold parameter.
+    # Output: a list of Detection objects.
+    # Step 1: call detect_bbox(...) to get board candidates.
+    # Step 2: call crop_bbox(...) to extract candidate crops.
+    # Step 3: call classify_mnist_digit(...) on each crop and filter low-confidence results.
+    # Step 4: package the remaining results as Detection objects.
     raise NotImplementedError("detect_mnist_board is not implemented")
 
 

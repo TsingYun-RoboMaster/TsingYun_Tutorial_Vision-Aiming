@@ -33,7 +33,6 @@ def list_calibration_images():
 def create_board_points(pattern_size, square_size_meters):
     # TODO(student): Build the 3D corner coordinates of your calibration board.
     # cols, rows = pattern_size
-    # points = zero array with rows * cols rows and 3 columns
     # for each row from 0 to rows - 1:
     #     for each col from 0 to cols - 1:
     #         index = row * cols + col
@@ -47,8 +46,6 @@ def create_board_points(pattern_size, square_size_meters):
 
 def detect_calibration_points(gray_image, pattern_size):
     # TODO(student): Detect and refine the calibration points in one image.
-    # if input image is not grayscale:
-    #     convert or reject it so corner detection receives one channel
     # flags = adaptive threshold + image normalization
     # found, corners = cv2.findChessboardCorners(gray_image, pattern_size, flags)
     # if found is false:

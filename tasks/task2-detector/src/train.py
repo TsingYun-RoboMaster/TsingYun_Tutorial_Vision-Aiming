@@ -5,19 +5,11 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import torch
+from torch import nn
+
 TASK_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MNIST_DATA_DIR = TASK_ROOT / "data"
-
-try:
-    from torch import nn
-except ModuleNotFoundError:
-    nn = None
-
-
-if nn is None:
-    _MNISTClassifierBase = object
-else:
-    _MNISTClassifierBase = nn.Module
 
 
 def download_mnist_dataset(data_dir: Path = DEFAULT_MNIST_DATA_DIR) -> Path:
@@ -30,13 +22,10 @@ def download_mnist_dataset(data_dir: Path = DEFAULT_MNIST_DATA_DIR) -> Path:
     return data_dir / "MNIST"
 
 
-class MNISTClassifier(_MNISTClassifierBase):
+class MNISTClassifier(nn.Module):
     """Small PyTorch classifier scaffold for 28x28 MNIST crops."""
 
     def __init__(self, input_size: int = 28 * 28, num_classes: int = 10) -> None:
-        if nn is None:
-            raise ModuleNotFoundError("Install the train extra to use MNISTClassifier: uv sync --extra train")
-
         super().__init__()
         # TODO(student): fill in your custom model architectures
         raise NotImplementedError("MNIST classifier model logic not implemented!")
@@ -58,9 +47,10 @@ def select_training_device(torch_module) -> str:
 
 
 def train_mnist_classifier(dataset_dir: Path, output_path: Path) -> Path:
+    
+    from torch.utils.data import DataLoader, random_split
+    import torchvision
     # TODO(student): Train the MNIST digit classifier used by model.py.
-    # import torch and torchvision inside this function so normal detector tests
-    # do not require the training extra
     # device = select_training_device(torch)
     # move the model and each batch to device
     # read training images and labels from dataset_dir
