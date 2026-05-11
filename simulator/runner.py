@@ -1,3 +1,4 @@
+import argparse
 import json
 import random
 import socket
@@ -26,8 +27,6 @@ from simulator_client.protocol import (
 
 HOST = "127.0.0.1"
 PORT = 50000
-# SEED = 12345
-SEED = random.randint(0, 2**31 - 1)
 LATENCY = 0.50
 CAMERA_MATRIX = [
     960.0, 0.0, 640.0,
@@ -44,7 +43,21 @@ def decode_image_to_rgb_pixels(image_bytes):
     return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Run the simulator client.")
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Use a fixed simulator seed. Defaults to a random seed.",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+    seed = args.seed if args.seed is not None else random.randint(0, 2**31 - 1)
+
     with socket.create_connection((HOST, PORT)) as sock:
         sock_file = sock.makefile("rw", encoding="utf-8", newline="\n")
 
@@ -56,7 +69,7 @@ def main():
 
         write_payload(
             sock_file,
-            start_payload(SEED, LATENCY, camera_matrix),
+            start_payload(seed, LATENCY, camera_matrix),
         )
 
         pipeline = None
