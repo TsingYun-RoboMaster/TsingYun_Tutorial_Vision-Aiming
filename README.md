@@ -154,6 +154,12 @@ Task 2 的真实 MNIST 训练测试默认跳过；如需显式运行，可使用
 uv run python simulator/runner.py
 ```
 
+如需复现实验结果，可以指定固定 seed：
+
+```bash
+uv run python simulator/runner.py --seed 12345
+```
+
 ## 4. 作业要求
 通过向仓库提交PR的方式完成作业。
 
