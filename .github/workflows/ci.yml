@@ -12,7 +12,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
 
       - name: Install Python dependencies
-        run: uv sync --extra vision --extra dev
+        run: uv sync --extra vision --extra train --extra dev
 
       - name: Run Python tests
         run: uv run pytest

@@ -40,40 +40,44 @@ def load_camera_params(path):
 
 def load_obj(model_path):
     """Load the vertices and faces from a small OBJ model."""
-    # TODO(student): Parse OBJ vertices and faces.
-    # if model_path does not exist:
-    #     raise a clear error
-    # vertices = []
-    # faces = []
-    # for each line in the OBJ file:
-    #     if line is blank or starts with "#":
-    #         continue
-    #     if line starts with "v ":
-    #         parts = split the line by whitespace
-    #         if parts does not contain exactly x, y, and z:
-    #             raise a clear error with the OBJ line number
-    #         vertex = convert x, y, z to floats
-    #         append vertex to vertices
-    #     else if line starts with "f ":
-    #         parts = split the line and ignore the leading "f"
-    #         if the face has fewer than 3 vertices:
-    #             raise a clear error
-    #         indices = empty list
-    #         for each face token:
-    #             vertex_text = text before the first slash
-    #             obj_index = convert vertex_text to integer
-    #             if obj_index is positive:
-    #                 python_index = obj_index - 1 because OBJ indices start at 1
-    #             else:
-    #                 python_index = len(vertices) + obj_index because negative OBJ indices are relative
-    #             append python_index to indices
-    #         triangulate the polygon with a fan:
-    #             for i from 1 to len(indices) - 2:
-    #                 append (indices[0], indices[i], indices[i + 1]) to faces
-    #     else:
-    #         ignore unsupported OBJ records such as vt, vn, and usemtl
-    # return vertices, faces
-    raise NotImplementedError("load_obj is not implemented")
+    vertices: list[tuple[float, float, float]] = []
+    faces: list[tuple[int, int, int]] = []
+
+    for raw_line in Path(model_path).read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+
+        if line.startswith("v "):
+            parts = line.split()
+            if len(parts) < 4:
+                continue
+            vertices.append((float(parts[1]), float(parts[2]), float(parts[3])))
+            continue
+
+        if line.startswith("f "):
+            parts = line.split()[1:]
+            if len(parts) < 3:
+                continue
+
+            indices: list[int] = []
+            for token in parts:
+                vertex_text = token.split("/")[0]
+                if not vertex_text:
+                    continue
+                obj_index = int(vertex_text)
+                if obj_index > 0:
+                    indices.append(obj_index - 1)
+                else:
+                    indices.append(len(vertices) + obj_index)
+
+            if len(indices) < 3:
+                continue
+
+            for i in range(1, len(indices) - 1):
+                faces.append((indices[0], indices[i], indices[i + 1]))
+
+    return vertices, faces
 
 
 def get_aruco_dictionary(name):
@@ -116,35 +120,22 @@ def _is_valid_pose_result(result):
 
 
 def estimate_marker_pose(marker_corners, marker_length_meters, camera_matrix, dist_coeffs):
+    object_points = create_marker_object_points(marker_length_meters)
+
     # TODO(student): Estimate one marker pose with OpenCV solvePnP.
-    # object_points = four 3D marker corners on the marker plane
-    # image_points = detected marker corners reshaped to four 2D pixel coordinates
-    # call cv2.solvePnP with object_points, image_points, camera_matrix, and dist_coeffs
-    # if OpenCV reports failure:
-    #     raise a clear error
-    # return rvec and tvec
+    # Input: detected 2D marker corners, marker size, camera_matrix, and dist_coeffs.
+    # Output: rvec and tvec.
+    # `object_points` has already been prepared for you.
     raise NotImplementedError("estimate_marker_pose is not implemented")
 
 
 def render_virtual_object(frame, rvec, tvec, camera_matrix, dist_coeffs, vertices, faces):
     # TODO(student): Render the loaded OBJ model on top of the ArUco marker.
-    # if vertices or faces are empty:
-    #     return frame unchanged
-    # vertices_array = convert vertices to a float32 Nx3 array
-    # center = average of the model vertices
-    # centered_vertices = vertices_array - center
-    # size = largest side length of the centered model bounding box
-    # if size is too small:
-    #     return frame unchanged
-    # scale = MARKER_LENGTH_METERS / size
-    # model_points = centered_vertices * scale
-    # flip the model y/z axes if needed so it appears above the marker plane
-    # projected_points = cv2.projectPoints(model_points, rvec, tvec, camera_matrix, dist_coeffs)
-    # pixels = round projected_points to integer pixel coordinates
-    # for each triangle face:
-    #     collect the three projected pixel points
-    #     draw the triangle outline on frame
-    # return frame
+    # Input: frame, pose, camera parameters, and the geometry returned by load_obj(...).
+    # Output: the rendered frame.
+    # Normalize the model to a reasonable size, project it to the image, and draw it on frame.
+    # Model size normalization can be trivial, thus we recommend you to ask AI for help if you get confused. The effect will be worth the effort!
+    # cv2.projectPoints(model_points, rvec, tvec, camera_matrix, dist_coeffs) may be helpful here.
     raise NotImplementedError("render_virtual_object is not implemented")
 
 
