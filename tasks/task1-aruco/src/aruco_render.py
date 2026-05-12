@@ -131,11 +131,19 @@ def estimate_marker_pose(marker_corners, marker_length_meters, camera_matrix, di
 
 def render_virtual_object(frame, rvec, tvec, camera_matrix, dist_coeffs, vertices, faces):
     # TODO(student): Render the loaded OBJ model on top of the ArUco marker.
-    # Input: frame, pose, camera parameters, and the geometry returned by load_obj(...).
+    # Input geometry from load_obj(...):
+    #   vertices: list of 3D points, equivalent to an array with shape (N, 3).
+    #   faces: list of triangle vertex indices, equivalent to an array with shape (M, 3).
     # Output: the rendered frame.
-    # Normalize the model to a reasonable size, project it to the image, and draw it on frame.
-    # Model size normalization can be trivial, thus we recommend you to ask AI for help if you get confused. The effect will be worth the effort!
-    # cv2.projectPoints(model_points, rvec, tvec, camera_matrix, dist_coeffs) may be helpful here.
+    #
+    # 1. Convert vertices and faces to numpy arrays if needed.
+    # 2. Normalize / scale / translate the model to fit above the marker.
+    # 3. Use cv2.projectPoints(...) to project 3D vertices to 2D image points.
+    # 4. For each face, collect its three projected 2D vertices.
+    # 5. Draw the triangle edges or filled triangle on frame.
+    #
+    # Model size normalization can be tricky at first; we recommend asking AI for help.
+    
     raise NotImplementedError("render_virtual_object is not implemented")
 
 
