@@ -59,6 +59,9 @@ uv run python tasks/task1-aruco/src/aruco_render.py
 
 期望输出：`tasks/task1-aruco/output/aruco_result.mp4`
 
-## 4. 提交注意
+## 4. Demo
+[demo video](assets/demo.mp4)
+
+## 5. 提交注意
 
 请只提交代码与必要文档，不要提交你自己的标定图片、原始视频和生成视频。
