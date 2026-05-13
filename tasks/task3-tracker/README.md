@@ -82,7 +82,14 @@ best = max(candidates, key=lambda d: (d.class_id, d.confidence))
 
 - 在实现完Kalman Filter后，你甚至可以选择其他算法，比如将三维运动作为一个整体向量考虑，甚至更换Filter。如果你在实现中更换了Filter，请至少保证Kalman Filter的实现是正确的，在下面加一个Filter，并且在PR中说明你更换了什么算法，为什么更换，以及更换后效果的变化。记得在`pipeline.py`的初始化里边替换你的新Filter。
 
-## 5. 结语
+## 5. 提交
+你需要开启 simulator 后，使用固定 seed=144259 运行一次客户端并录屏，
+```bash
+uv run python simulator/runner.py --seed 144259
+```
+你需要将其放置在和task1视频相同的云盘位置。请将你录屏时使用的命令和终端输出粘贴PR对应位置。
+
+## 6. 结语
 目前你已经实现了最基本的Detector和Tracker，但是一个完整的自瞄流程不可或缺的就是弹道解算，如果有余力，你可以提前了解以下在自瞄中必须掌握的内容，本次作业不做要求：
 
 1. [tf坐标转换](https://docs.ros.org/en/foxy/Concepts/About-Tf2.html)

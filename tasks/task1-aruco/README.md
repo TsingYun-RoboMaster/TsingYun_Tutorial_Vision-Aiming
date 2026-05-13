@@ -64,4 +64,4 @@ uv run python tasks/task1-aruco/src/aruco_render.py
 
 ## 5. 提交注意
 
-请只提交代码与必要文档，不要提交你自己的标定图片、原始视频和生成视频。
+请参照Demo Video，在PR的相应位置中提交一个指向清华云盘的链接，包含你完成的渲染的视频。

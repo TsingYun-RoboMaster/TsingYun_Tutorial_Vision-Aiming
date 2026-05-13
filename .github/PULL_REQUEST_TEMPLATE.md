@@ -4,7 +4,9 @@
 - 学号： TODO
 
 ## 2. 实现效果
-TODO：请附带一个清华云盘的公共链接，指向一个视频。你需要开启 simulator 后，使用固定 seed=144259 运行一次客户端并录屏，
+TODO：请附带一个清华云盘的公共链接，指向两个视频，分别以`task1_<学号>`和`task2_<学号>`命名。
+1. 对于task1，请参照我们提供的Demo视频，录制你完成的ArUco渲染视频。
+2. 对于打靶任务，你需要开启 simulator 后，使用固定 seed=144259 运行一次客户端并录屏，
 ```bash
 uv run python simulator/runner.py --seed 144259
 ```
